@@ -1,47 +1,27 @@
-import os
-from dotenv import load_dotenv
 import discord
-from discord.ext import commands
-
-# Load environment variables from .env file
-load_dotenv()
-
-# Retrieve the bot token from the environment variable
-TOKEN = os.getenv('TUSK_TOKEN')
-SERVER_ID = os.getenv('SERVER_ID')
-
-# Intents are required for certain actions like reading member info
-intents = discord.Intents.default()
-intents.guilds = True
-intents.messages = True
-
-# Create a bot instance with specified intents
-bot = commands.Bot(command_prefix='!', intents=intents)
 
 
-async def delete_channels():
-    await bot.wait_until_ready()
-    guild = bot.get_guild(SERVER_ID)
+async def delete_channels(guild, *channel_ids):
+    deleted_channels = []
+    for channel_id_str in channel_ids:
+        try:
+            # Convert channel ID from string to integer
+            channel_id = int(channel_id_str)
+            # Retrieve the channel object using the channel ID
+            channel = guild.get_channel(channel_id)
+            if channel:
+                # Delete the channel and append its ID to the deleted list
+                await channel.delete()
+                deleted_channels.append(str(channel_id))
+                print(f"Deleted channel: {channel.name} ({channel.id})")
+            else:
+                # Print a message if the channel ID does not exist
+                print(f"Channel with ID {channel_id} not found in this server.")
+        except ValueError:
+            # Handle the case where the provided channel ID is not a valid integer
+            print(f"Invalid channel ID: {channel_id_str}")
+        except discord.HTTPException as e:
+            # Handle any exceptions that occur during the deletion process
+            print(f"Error deleting channel with ID {channel_id_str}: {e}")
 
-    # Ask for input inside PyCharm
-    channel_ids_input = input("Please enter the list of channel IDs to delete, separated by commas: ")
-    channel_ids_input = channel_ids_input.strip('[]')  # Remove square brackets if present
-    channel_ids = [int(cid.strip()) for cid in channel_ids_input.split(',')]
-
-    for channel_id in channel_ids:
-        channel = bot.get_channel(channel_id)
-        if channel:
-            await channel.delete()
-            print(f"Deleted channel: {channel_id}")
-
-    await bot.close()
-
-
-# Run the delete_channels coroutine after the bot is ready
-@bot.event
-async def on_ready():
-    await delete_channels()
-
-
-# Start the bot
-bot.run(TOKEN)
+    return deleted_channels

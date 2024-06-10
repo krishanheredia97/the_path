@@ -1,0 +1,23 @@
+# 🧮 How to Calculate GP for Rewards
+
+You gain 12 GP for every day of abstinence. To calculate how much GP a reward should cost, you can use the following simple formulas:
+
+### 📅 Days
+**Formula**: Total days of abstinence * 12 = GP
+
+### 📆 Weeks
+**Formula**: Total weeks of abstinence * 84 = GP
+
+### 📅 Months
+**Formula**: Total months of abstinence * 336 = GP
+
+---
+
+### 📖 Example: Calculating GP for a New Book
+
+If you want to set a reward for a new book:
+
+- **Estimate**: It takes 3 weeks of abstinence.
+- **Calculation**: 3 weeks * 84 = 252 GP
+
+So, the new book would be set at around **252 GP**.

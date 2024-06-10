@@ -1,33 +1,16 @@
 import discord
 from discord.ext import commands
 from user_data import User
-import firebase_admin
-from firebase_admin import credentials
 from dotenv import load_dotenv
-import os
-import msg  # Import the msg module
+from backend.data_manager import variable_finder
 
 # Load environment variables from .env file
 load_dotenv()
 
-# Get the path to the Firebase service account key JSON file from the environment variable
-firebase_credentials_path = os.getenv('FIREBASE_CREDENTIALS')
-
-# Initialize Firebase
-cred = credentials.Certificate(firebase_credentials_path)
-firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://cuesty-424dc-default-rtdb.firebaseio.com/'
-})
-
-TOKEN = os.getenv('ARMINIO_TOKEN')
-VICES_ID = 1238187584434339957  # ID of the 'vices' channel
-REWARDS_ID = 1238187584434339956  # ID of the 'rewards' channel
-SETTINGS_ID = 1242293048659021886  # ID of the 'settings' channel
-
 intents = discord.Intents.default()
 intents.messages = True
 intents.message_content = True
-intents.guilds = True  # Add this line to enable guild-related events
+intents.guilds = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
@@ -114,8 +97,9 @@ class RedeemRewardButton(discord.ui.Button):
 
         view = discord.ui.View(timeout=None)  # Set timeout to None
         view.add_item(RedeemRewardSelect(user))
-        await interaction.response.send_message(f"Select a reward to redeem: You have {user.data['User_Progress']['Main_Progress']['User_Points']['user_gp']['current_gp']}gp available.",
-                                                view=view, ephemeral=True)
+        await interaction.response.send_message(
+            f"Select a reward to redeem: You have {user.data['User_Progress']['Main_Progress']['User_Points']['user_gp']['current_gp']}gp available.",
+            view=view, ephemeral=True)
         user.save_user_data()  # Save updated rewards
 
 
@@ -133,9 +117,13 @@ class MyRewardsButton(discord.ui.Button):
             rewards_list = "\n".join([f"{reward['name']} ({reward['cost']}gp)" for reward in unredeemed_rewards])
             embed.add_field(name="Current Rewards", value=rewards_list, inline=False)
         else:
-            embed.add_field(name="No rewards to redeem", value=f"You have {user.data['User_Progress']['Main_Progress']['User_Points']['user_gp']['current_gp']}gp available.", inline=False)
+            embed.add_field(name="No rewards to redeem",
+                            value=f"You have {user.data['User_Progress']['Main_Progress']['User_Points']['user_gp']['current_gp']}gp available.",
+                            inline=False)
 
-        embed.add_field(name="Available GP", value=f"{user.data['User_Progress']['Main_Progress']['User_Points']['user_gp']['current_gp']}gp", inline=False)
+        embed.add_field(name="Available GP",
+                        value=f"{user.data['User_Progress']['Main_Progress']['User_Points']['user_gp']['current_gp']}gp",
+                        inline=False)
 
         await purge_and_resend_rewards_buttons(interaction)
         await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -215,7 +203,8 @@ class MyVicesButton(discord.ui.Button):
 
         for vice in user.data["User_Habits"]["vices"]:
             status_color = "green" if vice["status"] == "Active" else "red"
-            status_text = f"```diff\n+ on withdrawal\n```" if vice["status"] == "Active" else f"```diff\n- on relapse\n```"
+            status_text = f"```diff\n+ on withdrawal\n```" if vice[
+                                                                  "status"] == "Active" else f"```diff\n- on relapse\n```"
             embed.add_field(name=vice["name"], value=status_text, inline=False)
 
         await purge_and_resend_vices_buttons(interaction)
@@ -244,13 +233,16 @@ async def purge_and_resend_rewards_buttons(interaction):
     await channel.send("Click to add or redeem a reward, or view your rewards:", view=view)
 
 
-@bot.event
-async def on_ready():
+async def bot1(ctx, bot, server_id):
     print(f'Logged in as {bot.user}!')
-    vices_channel = bot.get_channel(VICES_ID)
-    rewards_channel = bot.get_channel(REWARDS_ID)
-    settings_channel = bot.get_channel(SETTINGS_ID)
-    if (vices_channel):
+    ctx.guild.id = server_id
+    vices_channel_id = variable_finder(server_id, 'VICES_ID')
+    rewards_channel_id = variable_finder(server_id, 'REWARDS_ID')
+
+    vices_channel = bot.get_channel(vices_channel_id)
+    rewards_channel = bot.get_channel(rewards_channel_id)
+
+    if vices_channel:
         await vices_channel.purge()
         view = discord.ui.View(timeout=None)  # Set timeout to None
         view.add_item(QuitButton())
@@ -258,37 +250,23 @@ async def on_ready():
         view.add_item(AddViceButton())
         view.add_item(MyVicesButton())
         await vices_channel.send("Click to add, relapse, or view history of vices:", view=view)
-    if (rewards_channel):
+
+    if rewards_channel:
         await rewards_channel.purge()
         view = discord.ui.View(timeout=None)  # Set timeout to None
         view.add_item(AddRewardButton())
         view.add_item(RedeemRewardButton())
         view.add_item(MyRewardsButton())
         await rewards_channel.send("Click to add or redeem a reward, or view your rewards:", view=view)
-    if (settings_channel):
-        await settings_channel.send("Use `!setgender <m/f/o>` to set your gender.")
-
-    # Call the send_messages function from msg.py
-    await msg.send_messages(bot)
 
 
-@bot.command(name='setgender')
-async def set_gender(ctx, gender):
-    if ctx.channel.id != SETTINGS_ID:
-        await ctx.send(f"This command can only be used in the settings channel.")
-        return
-
-    if gender.lower() not in ['m', 'f', 'o']:
-        await ctx.send("Invalid gender. Use `m` for male, `f` for female, and `o` for other.")
-        return
-
-    user = User(str(ctx.author.id), ctx.author.name)
-    user.data['User_Main']['gender'] = gender.lower()
-    user.save_user_data()
-    await user.update_role(ctx.author, ctx.guild)  # Ensure role is updated when gender is set
-    await ctx.send(f"Gender set to {gender} for {ctx.author.mention}")
+async def assign_default_role(member):
+    guild = member.guild
+    user = User(str(member.id), member.name)
+    await user.update_role(member, guild)
 
 
+# Ensure these are kept for handling member updates and joins
 @bot.event
 async def on_member_update(before, after):
     if before.roles != after.roles:
@@ -302,12 +280,3 @@ async def on_member_join(member):
     guild = member.guild
     await user.update_role(member, guild)
     user.save_user_data()
-
-
-async def assign_default_role(member):
-    guild = member.guild
-    user = User(str(member.id), member.name)
-    await user.update_role(member, guild)
-
-
-bot.run(TOKEN)

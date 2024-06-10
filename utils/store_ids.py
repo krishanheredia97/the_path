@@ -10,10 +10,12 @@ def store_ids(role_ids=None, channel_ids=None):
         lines = [line for line in lines if not line.startswith("ROLES:") and not line.startswith("CHANNELS:")]
 
         if role_ids:
-            roles_line = roles_line.strip() + ", " + ", ".join(map(str, role_ids)) + "\n"
+            # Update roles line with space-separated IDs
+            roles_line = roles_line.strip() + " " + " ".join(map(str, role_ids)) + "\n"
 
         if channel_ids:
-            channels_line = channels_line.strip() + ", " + ", ".join(map(str, channel_ids)) + "\n"
+            # Update channels line with space-separated IDs
+            channels_line = channels_line.strip() + " " + " ".join(map(str, channel_ids)) + "\n"
 
         # Rewrite the file with the updated lines
         file.seek(0)

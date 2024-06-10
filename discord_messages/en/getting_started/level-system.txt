@@ -1,0 +1,18 @@
+# Level System 📈
+
+As you engage with the server and work on your habits, you'll earn points and level up. Here’s how it works:
+
+### XP (Experience Points) 🌟
+- Earn **1 XP** for every minute of abstinence from your bad habits.
+
+### GP (Gold Points) 💰
+- Earn **1 GP** for every 2 hours of abstinence.
+
+### Honor Points 🏅
+- Earn **1 Honor point** for each day of abstinence. These points will have more uses as you progress.
+
+## Leveling Up 🔝
+As you earn XP, you will level up and unlock new roles and content within the server.
+Higher levels grant access to exclusive channels and rewards.
+
+Keep working on your habits and watch yourself grow within the community! 💪✨

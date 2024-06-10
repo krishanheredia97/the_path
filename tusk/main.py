@@ -3,8 +3,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 import logging
-import firebase_admin
-from firebase_admin import credentials
+from backend.data_manager import load_server_mapping
 
 logging.basicConfig(level=logging.INFO)
 
@@ -15,20 +14,23 @@ intents.guilds = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 load_dotenv()
-TOKEN2 = os.getenv('TUSK_TOKEN')
-firebase_credentials_path = os.getenv('FIREBASE_CREDENTIALS')
-REVIEW_QUEST_CHANNEL_ID = 1245264665315901460
 
-cred = credentials.Certificate(firebase_credentials_path)
-firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://cuesty-424dc-default-rtdb.firebaseio.com/'
-})
+TOKEN2 = os.getenv('TUSK_TOKEN')
+REVIEW_QUEST_CHANNEL_ID = 1245264665315901460
+#SERVER_ID = 1238187583734022246
+
+
+
+@bot.command()
+async def on(ctx):
+    from tusk.buttons.create_quest import initialize_create_quest_channel
+    server_id = ctx.guild.id
+    await initialize_create_quest_channel(bot, server_id)
 
 @bot.event
 async def on_ready():
     logging.info(f'Logged in as {bot.user}!')
-    from tusk.buttons.create_quest import initialize_create_quest_channel
-    await initialize_create_quest_channel(bot)
+
 
 @bot.event
 async def on_message(message):

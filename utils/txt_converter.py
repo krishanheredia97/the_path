@@ -45,10 +45,7 @@ if __name__ == "__main__":
     file_names = [name.strip().replace(" ", "_") for name in file_names_input.split(", ")]
 
     project_dirs = [
-        r"C:\Users\danie\PycharmProjects\Cuesty\arminio",
-        r"C:\Users\danie\PycharmProjects\Cuesty\utils",
-        r"C:\Users\danie\PycharmProjects\Cuesty\tusk3",
-        r"C:\Users\danie\PycharmProjects\Cuesty\frontend",
+        r"C:\Users\danie\PycharmProjects\the_path"
     ]
 
     convert_files_to_txt(project_dirs, file_names, output_dir)

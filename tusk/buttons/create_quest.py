@@ -2,17 +2,17 @@ import discord
 import json
 import logging
 import re
-from backend.data_manager import save_quest_data
+from backend.data_manager import save_quest_data, load_server_mapping, variable_finder
 from firebase_admin import db
 
-CREATE_QUEST_CHANNEL_ID = 1243061918080438272
+#server_id = 1238187583734022246
+#CREATE_QUEST_CHANNEL_ID = variable_finder(server_id, 'CREATE_QUEST_CHANNEL_ID')
 
-with open('config/quest_default_config.json', 'r') as file:
+with open('C:\\Users\\danie\\PycharmProjects\\the_path\\tusk\\config\\quest_default_config.json', 'r') as file:
     QUEST_DEFAULT_CONFIG = json.load(file)
 
 # Store the reward_config globally
 REWARD_CONFIG = QUEST_DEFAULT_CONFIG
-
 
 
 class CreateQuestView(discord.ui.View):
@@ -48,7 +48,8 @@ class CreateQuestButton(discord.ui.Button):
                           f"I'm ready for the quest instructions!")
 
 
-async def initialize_create_quest_channel(bot):
+async def initialize_create_quest_channel(bot, server_id):
+    CREATE_QUEST_CHANNEL_ID = variable_finder(server_id, 'CREATE_QUEST_CHANNEL_ID')
     try:
         channel = bot.get_channel(CREATE_QUEST_CHANNEL_ID)
         if channel:
@@ -60,6 +61,7 @@ async def initialize_create_quest_channel(bot):
         logging.error(f"Missing permissions to send messages in the channel with ID {CREATE_QUEST_CHANNEL_ID}.")
     except discord.HTTPException as e:
         logging.error(f"An error occurred: {e}")
+
 
 
 async def handle_thread_message(message):

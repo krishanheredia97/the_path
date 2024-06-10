@@ -1,0 +1,43 @@
+# Role System 🏅
+
+As you engage with the server and work on your habits, you'll earn points and level up. Each level grants you a new role with unique perks. Here are the roles you can achieve:
+
+### 👤 Peasant (Level 1-5)
+- Basic access to general chat and support channels.
+- Participate in community challenges.
+
+### 🛡️ Squire (Level 6-10)
+- Access to exclusive channels for advanced discussions.
+- Eligible for minor rewards in community events.
+
+### ⚔️ Knight (Level 11-20)
+- Priority support in help channels.
+- Eligible for medium-tier rewards.
+
+### 🏰 Noble (Level 21-30)
+- Access to noble-only channels.
+- Eligible for high-tier rewards.
+
+### 👑 Lord/Lady (Level 31-40)
+- Special badge next to your username.
+- Access to lord/lady exclusive events.
+
+### 🏯 Baron/Baroness (Level 41-50)
+- Ability to host community events.
+- Extra rewards for event participation.
+
+### 🦁 Duke/Duchess (Level 51-60)
+- Access to high-level strategy sessions.
+- Enhanced influence in community decisions.
+
+### 🌟 Prince/Princess (Level 61-70)
+- Personal mentor for habit tracking.
+- Extra perks in reward system.
+
+### 👑 King/Queen (Level 71-80)
+- Exclusive access to king/queen channels.
+- Highest priority support.
+
+### 🌌 Emperor/Empress (Level 81-100)
+- Ultimate recognition in the community.
+- Access to all exclusive channels and events.

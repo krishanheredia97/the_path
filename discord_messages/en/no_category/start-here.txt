@@ -1,0 +1,30 @@
+# Welcome to The Path Discord Server! 🌟
+
+We are excited to have you here. This server is dedicated to self-improvement across various aspects of life, including habits, health, productivity, and personal goals. Our aim is to create a supportive community where members can share experiences, track their progress, and motivate each other in achieving their personal improvement goals.
+
+## Vision
+The Path is designed as a virtual space dedicated to self-improvement. Here, you can:
+- Track and manage your bad habits (in the future also good habits)
+- Earn points (XP and Honor) and virtual currency (GP) for maintaining good habits
+- Redeem rewards for your progress
+- Participate in community-driven storylines and challenges
+- Engage in organized events and workshops on topics like mental health, physical fitness, and time management
+
+## How the Server Works
+### Interacting with Arminio 🟡
+All channels that have a golden circle emoji 🟡 will have an interface to interact with the server's bot, Arminio, regarding habit tracking and other features.
+
+### Starting with Vices
+Navigate to <#instructions> to read the instructions for how to start quitting your "vices" or bad habits.
+
+### Understanding Rewards
+Navigate to <#instructions> to learn about how rewards work, so that you can have a more entertaining self-improvement journey.
+
+## Important Channels
+- <#level-system> : Understand how the leveling system works
+- <#roles> : See what the different roles of the server are and what requirements they have for acquiring them
+- <#help-and-support> : For help and support about issues you may encounter in the server
+- <#suggestions> : If you have any suggestions, you can place them here
+- <#coming-up> : To see what features are coming to the server
+
+Explore the channels and engage with the community to make the most out of your self-improvement journey! Let’s achieve our goals together! 💪

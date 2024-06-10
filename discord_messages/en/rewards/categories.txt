@@ -1,0 +1,29 @@
+# 🎁 What are Rewards?
+
+Rewards are incentives you give to yourself for maintaining good habits. For example, you might reward yourself with an ice cream every week you spend without smoking. When you add a reward, you need to give it a name and assign a value in GP (the server's currency), which you earn by abstaining from vices.
+
+## 🏅 Reward Categories
+
+### 🍬 Treat
+**Difficulty**: These are small, easy-to-earn rewards that can be obtained quickly.
+**Time to Earn**: 1-2 weeks of abstinence
+**Cost Range**: 84-168 GP
+**Examples**: A cup of coffee, a small dessert, a new book.
+
+### 🎟️ Reward
+**Difficulty**: Intermediate rewards that require a bit more time and effort to earn.
+**Time to Earn**: 2-4 weeks of abstinence
+**Cost Range**: 168-336 GP
+**Examples**: A movie ticket, a nice dinner, a video game.
+
+### 🏆 Challenge
+**Difficulty**: These rewards are harder to earn and take more dedication and time.
+**Time to Earn**: 1-2 months of abstinence
+**Cost Range**: 336-672 GP
+**Examples**: A weekend trip, new headphones, a fitness class pass.
+
+### 💎 Luxury
+**Difficulty**: These are the most difficult and rewarding items, requiring significant time and effort.
+**Time to Earn**: 3+ months of abstinence
+**Cost Range**: 1008+ GP
+**Examples**: A new gadget, a luxury item, an expensive hobby purchase.
